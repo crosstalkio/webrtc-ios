@@ -2,8 +2,8 @@ DEPOT_TOOLS := depot_tools
 SRC := src
 BUILD := build
 
-MILESTONE := 83
-BRANCH_HEAD := 4103
+MILESTONE := 84
+BRANCH_HEAD := 4147
 
 BINTRAY_USER ?=
 BINTRAY_API_KEY ?=
@@ -21,7 +21,10 @@ fetch:
 ifeq (,$(wildcard $(SRC)))
 	PATH=$$PATH:$(realpath $(DEPOT_TOOLS)) fetch --nohooks webrtc_ios
 endif
-	cd $(SRC) && git fetch origin refs/branch-heads/$(BRANCH_HEAD) && git checkout branch-heads/$(BRANCH_HEAD)
+	cd $(SRC) && \
+		git reset --hard && \
+		git fetch origin refs/branch-heads/$(BRANCH_HEAD) && \
+		git checkout branch-heads/$(BRANCH_HEAD)
 
 sync:
 	cd $(SRC) && PATH=$$PATH:$(realpath $(DEPOT_TOOLS)) gclient sync
